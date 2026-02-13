@@ -10,9 +10,16 @@ pipeline {
     }
     stages {
         stage('Build') {
-            steps {
-                sh 'mvn -B -DskipTests clean package'
-            }
+        steps {
+            sh '''
+                export MAVEN_HOME=/opt/maven
+                export PATH=$MAVEN_HOME/bin:$PATH
+
+                java --version
+                mvn --version
+                mvn -B -DskipTests clean package
+            '''
+        }
         }
         stage('Test') {
             steps {
